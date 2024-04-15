@@ -1,5 +1,9 @@
 # RateLimitPlayground
 
+A place to experiment with (and visualize) different rate limiting strategies.
+
+## Getting Started
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
