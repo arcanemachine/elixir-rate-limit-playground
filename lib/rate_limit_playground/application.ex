@@ -9,7 +9,8 @@ defmodule RateLimitPlayground.Application do
   def start(_type, _args) do
     children = [
       RateLimitPlaygroundWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:rate_limit_playground, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:rate_limit_playground, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: RateLimitPlayground.PubSub},
       # Start a worker by calling: RateLimitPlayground.Worker.start_link(arg)
       # {RateLimitPlayground.Worker, arg},

@@ -2,7 +2,9 @@ defmodule RateLimitPlaygroundWeb.ErrorJSONTest do
   use RateLimitPlaygroundWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert RateLimitPlaygroundWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert RateLimitPlaygroundWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Not Found"}
+           }
   end
 
   test "renders 500" do
