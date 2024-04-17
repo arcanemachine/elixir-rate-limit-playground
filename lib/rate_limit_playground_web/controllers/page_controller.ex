@@ -7,6 +7,10 @@ defmodule RateLimitPlaygroundWeb.PageController do
     render(conn, :home, layout: false)
   end
 
+  def hello(conn, _params) do
+    text(conn, "Hello world!")
+  end
+
   def wait(conn, params) do
     response_delay = (params["response_delay"] || "2000") |> String.to_integer()
 

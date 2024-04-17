@@ -18,6 +18,7 @@ defmodule RateLimitPlaygroundWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/hello", PageController, :hello
     get "/wait", PageController, :wait
     get "/delay", PageController, :wait
     get "/hang", PageController, :wait
