@@ -49,7 +49,7 @@ config :rate_limit_playground, RateLimitPlaygroundWeb.Endpoint,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/rate_limit_playground_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/rate_limit_playground_web/.*/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
