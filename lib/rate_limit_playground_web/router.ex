@@ -22,6 +22,11 @@ defmodule RateLimitPlaygroundWeb.Router do
     get "/delay", PageController, :wait
     get "/hang", PageController, :wait
 
+    scope "/tesla" do
+      scope "/hackney" do
+        live "/max-connections", Tesla.Hackney.Live.MaxConnections
+      end
+    end
   end
 
   # Other scopes may use custom stacks.

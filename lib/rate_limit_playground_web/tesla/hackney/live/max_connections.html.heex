@@ -1,0 +1,145 @@
+<h1 class="w-full flex justify-center text-2xl">
+  Rate Limit: Max Connections
+</h1>
+
+<div class="fixed bottom-0 left-0 p-2 text-lg font-bold bg-gray-200 rounded-tr-lg">
+  Socket uptime: <%= @ticker %> second<%= if @ticker != 1, do: "s" %>
+</div>
+
+<div class="my-4 text-center">
+  <button class="p-4 text-xl font-bold bg-blue-400 rounded-lg" phx-click="debug">Debug</button>
+</div>
+
+<h2 class="mt-8 text-xl font-bold">Client Settings</h2>
+<p class="mt-4">
+  Choose your settings and create a Tesla client.
+</p>
+
+<form class="mt-8" phx-submit="create_client">
+  <div class="mt-4 flex items-center gap-4">
+    <label for="max_connections" class="w-40 text-center">
+      max_connections:
+    </label>
+    <input
+      type="number"
+      name="max_connections"
+      class="rounded-lg"
+      value="4"
+      min="1"
+      phx-update="ignore"
+      id="client-max_connections"
+    />
+  </div>
+  <div class="mt-4 flex items-center gap-4">
+    <label for="recv_timeout" class="w-40 text-center">
+      recv_timeout:
+    </label>
+    <input
+      type="number"
+      name="recv_timeout"
+      class="rounded-lg"
+      value="10000"
+      min="1"
+      phx-update="ignore"
+      id="client-recv_timeout"
+    />
+  </div>
+  <div class="mt-4 flex items-center gap-4">
+    <label for="checkout_timeout" class="w-40 text-center">
+      checkout_timeout:
+    </label>
+    <input
+      type="number"
+      name="checkout_timeout"
+      class="rounded-lg"
+      value="8000"
+      min="1"
+      phx-update="ignore"
+      id="client-checkout_timeout"
+    />
+  </div>
+
+  <div class="mt-8 text-center">
+    <button class="w-40 px-4 py-2 bg-green-800 text-lg text-white rounded-lg">
+      Create client
+    </button>
+  </div>
+</form>
+
+<hr class="my-12" />
+
+<%= if length(@clients) > 0 do %>
+  <h2 class="text-xl font-bold">Request Settings</h2>
+  <p class="mt-4">
+    Select a Tesla client and settings for this request.
+  </p>
+  <p class="mt-2">
+    The "response delay" determines how long the server will wait before responding.
+  </p>
+
+  <form class="mt-8" phx-submit="create_request">
+    <div class="min-h-[3rem] flex items-center gap-4">
+      <label for="client" class="w-40 text-center">
+        Client:
+      </label>
+      <div class="flex flex-col">
+        <%= for client <- @clients |> Enum.uniq() do %>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="pool"
+                value={get_pool_by_client(client)}
+                checked
+                id="request-pool"
+                phx-update="ignore"
+              />
+              <%= get_pool_by_client(client) %>
+              <span>(max_connections: <%= get_max_connections_by_client(client) %>,</span>
+              <span>recv_timeout: <%= get_recv_timeout_by_client(client) %>,</span>
+              <span>checkout_timeout: <%= get_checkout_timeout_by_client(client) %>)</span>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+      <label for="response_delay" class="w-40 text-center">
+        Response delay:
+      </label>
+      <input
+        type="number"
+        name="response_delay"
+        class="rounded-lg"
+        value="5000"
+        min="0"
+        step="500"
+        phx-update="ignore"
+        id="request-response_delay"
+      />
+    </div>
+
+    <div class="mt-8 text-center">
+      <button class="w-40 px-4 py-2 bg-green-800 text-lg text-white rounded-lg">
+        Create request
+      </button>
+    </div>
+  </form>
+
+  <hr class="my-12" />
+
+  <h2 class="mt-8 mb-4 text-xl font-bold">Clients</h2>
+
+  <%= for client <- @clients |> Enum.uniq() do %>
+    <h3 class="mt-4 text-lg">
+      <%= get_pool_by_client(client) %> (Stats: <%= "#{inspect(client.stats) || "N/A"}" %>)
+    </h3>
+    <div class="mt-2 ml-4">
+      <%= if Enum.empty?(@requests) do %>
+        No requests have been created for this client. Try creating a request!
+      <% else %>
+        <%= length(get_requests_by_client(@requests, client)) %> requests sent
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
