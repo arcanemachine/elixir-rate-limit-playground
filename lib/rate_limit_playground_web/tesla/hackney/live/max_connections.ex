@@ -44,7 +44,7 @@ defmodule RateLimitPlaygroundWeb.Tesla.Hackney.Live.MaxConnections do
   end
 
   defp schedule_data_refresh() do
-    Process.send_after(self(), :update_page_data, 500)
+    Process.send_after(self(), :update_page_data, 250)
   end
 
   @impl true
@@ -66,7 +66,7 @@ defmodule RateLimitPlaygroundWeb.Tesla.Hackney.Live.MaxConnections do
   end
 
   @impl true
-  def handle_event("debug", _params, socket) do
+  def handle_event("pry", _params, socket) do
     require IEx
     IEx.pry()
     {:noreply, socket}

@@ -3,11 +3,11 @@
 </h1>
 
 <div class="fixed bottom-0 left-0 p-2 text-lg font-bold bg-gray-200 rounded-tr-lg">
-  Socket uptime: <%= @ticker %> second<%= if @ticker != 1, do: "s" %>
+  Data update ticker: <%= @ticker %>
 </div>
 
-<div class="my-4 text-center">
-  <button class="p-4 text-xl font-bold bg-blue-400 rounded-lg" phx-click="debug">Debug</button>
+<div class="fixed bottom-0 right-0 p-2 text-lg font-bold rounded-tr-lg">
+  <button class="w-24 p-4 text-xl font-bold bg-blue-400 rounded-lg" phx-click="pry">Pry</button>
 </div>
 
 <h2 class="mt-8 text-xl font-bold">Client Settings</h2>
@@ -39,7 +39,7 @@
       name="recv_timeout"
       class="rounded-lg"
       value="10000"
-      min="1"
+      min="0"
       phx-update="ignore"
       id="client-recv_timeout"
     />
@@ -53,7 +53,7 @@
       name="checkout_timeout"
       class="rounded-lg"
       value="8000"
-      min="1"
+      min="0"
       phx-update="ignore"
       id="client-checkout_timeout"
     />
